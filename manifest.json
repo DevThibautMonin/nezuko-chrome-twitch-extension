@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Nezuko Twitch Stream Extension",
+  "version": "1.0.0",
+  "description": "This extension notifies you when Nezuko's Twitch stream goes live.",
+  "permissions": [
+    "notifications",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://api.twitch.tv/*"
+  ],
+  "icons": {
+    "16": "assets/extension_image16x16.png",
+    "48": "assets/extension_image48x48.png",
+    "128": "assets/extension_image128x128.png"
+  },
+  "action": {
+    "default_popup": "popups/popup.html",
+    "default_icon": "assets/extension_image1024x1024.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/extension_image16x16.png",
+        "assets/extension_image48x48.png",
+        "assets/extension_image128x128.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}
