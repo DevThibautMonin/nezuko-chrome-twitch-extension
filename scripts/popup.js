@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function redirectToStream() {
-  chrome.tabs.create({ url: `https://www.twitch.tv/${streamer}` })
+  chrome.tabs.create({ url: `https://www.twitch.tv/${streamerChannel}` })
 }
 
 function updateUI(isLive) {

@@ -1,23 +1,18 @@
 const clientId = "ynvfymlhir1n84lc8ggn5xfcvlkw51"
-const clientSecret = "1wywr3u8p6s1l3pkc026tdl5hlmvz1"
 let accessToken = ""
 const streamer = "nezukolive"
+const tokenFetchUrl = "https://nezuko-chrome-twitch-extension-back.vercel.app/api/get-twitch-token"
 const authUrl = "https://id.twitch.tv/oauth2/token"
 const streamerUrl = "https://api.twitch.tv/helix/streams"
 let currentLiveStatus = null;
 
 async function refreshAccessToken() {
   console.log("Access token retrieving...")
-  const response = await fetch(authUrl, {
+  const response = await fetch(tokenFetchUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({
-      "client_id": clientId,
-      "client_secret": clientSecret,
-      "grant_type": "client_credentials"
-    }).toString()
   })
 
   if (!response.ok) {

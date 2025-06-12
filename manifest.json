@@ -8,7 +8,8 @@
     "alarms"
   ],
   "host_permissions": [
-    "*://api.twitch.tv/*"
+    "*://api.twitch.tv/*",
+    "https://nezuko-chrome-twitch-extension-back.vercel.app/*"
   ],
   "icons": {
     "16": "assets/extension_image16x16.png",
