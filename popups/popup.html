@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nezuko Twitch Stream Extension</title>
+  <link rel="stylesheet" href="../styles/popup.css" />
+  <script src="../scripts/popup.js" defer></script>
 </head>
 
 <body>
-  <h1>Test</h1>
-  <img src="../assets/extension_image1024x1024.png" alt="icon" width="128" height="128">
+  <div class="popup-container">
+    <div id="streamStatus" class="status-indicator"></div>
+    <img src="../assets/extension_image1024x1024.png" alt="Nezuko Icon" class="avatar" />
+
+    <h1 id="streamTitle">.</h1>
+
+    <button id="streamButton" class="stream-button">Rejoindre le stream</button>
+  </div>
 </body>
 
 </html>

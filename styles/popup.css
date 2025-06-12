@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  width: 320px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(120deg, #8B5CF6, #A78BFA, #C4B5FD, #8B5CF6);
+  background-size: 600% 600%;
+  animation: gradientShift 8s ease infinite;
+  color: white;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.popup-container {
+  background: white;
+  position: relative;
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 240px;
+  max-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid #8B5CF6;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#streamTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4C1D95;
+  margin: 0;
+}
+
+.stream-button {
+  background-color: #8B5CF6;
+  color: white;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.stream-button:hover {
+  background-color: #7C3AED;
+  transform: scale(1.05);
+}
+
+.stream-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);
+}
+
+.status-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: red;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
