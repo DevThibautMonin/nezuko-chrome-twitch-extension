@@ -6,25 +6,37 @@ const authUrl = "https://id.twitch.tv/oauth2/token"
 const streamerUrl = "https://api.twitch.tv/helix/streams"
 let currentLiveStatus = null;
 
-async function refreshAccessToken() {
-  console.log("Access token retrieving...")
-  const response = await fetch(tokenFetchUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  })
+async function refreshAccessToken(retryCount = 0) {
+  console.log("Access token retrieving...");
+  try {
+    const response = await fetch(tokenFetchUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
 
-  if (!response.ok) {
-    const errorText = await response.text()
-    console.error("Failed to refresh access token:", response.status, errorText)
-    return null
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Failed to refresh access token:", response.status, errorText);
+
+      if (retryCount < 5) {
+        console.log(`Retrying token fetch... (${retryCount + 1}/3)`);
+        await new Promise(res => setTimeout(res, 1000 * (retryCount + 1)));
+        return await refreshAccessToken(retryCount + 1);
+      }
+      return null;
+    }
+
+    const data = await response.json();
+    accessToken = data.access_token;
+    console.log("Access token retrieved.");
+    return accessToken;
+
+  } catch (err) {
+    console.error("Exception during token refresh:", err);
+    return null;
   }
-
-  const data = await response.json()
-  accessToken = data.access_token
-  console.log("Access token retrieved.")
-  return accessToken
 }
 
 async function checkIfLive() {
