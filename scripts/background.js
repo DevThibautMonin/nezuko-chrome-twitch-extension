@@ -5,9 +5,11 @@ const tokenFetchUrl = "https://nezuko-chrome-twitch-extension-back.vercel.app/ap
 const authUrl = "https://id.twitch.tv/oauth2/token"
 const streamerUrl = "https://api.twitch.tv/helix/streams"
 let currentLiveStatus = null;
+let tokenRetryActive = false;
 
-async function refreshAccessToken(retryCount = 0) {
-  console.log("Access token retrieving...");
+async function refreshAccessToken() {
+  console.log("Trying to retrieve access token...");
+
   try {
     const response = await fetch(tokenFetchUrl, {
       method: "POST",
@@ -18,25 +20,35 @@ async function refreshAccessToken(retryCount = 0) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Failed to refresh access token:", response.status, errorText);
-
-      if (retryCount < 5) {
-        console.log(`Retrying token fetch... (${retryCount + 1}/3)`);
-        await new Promise(res => setTimeout(res, 1000 * (retryCount + 1)));
-        return await refreshAccessToken(retryCount + 1);
-      }
+      console.error("Token fetch failed:", response.status, errorText);
+      scheduleTokenRetry();
       return null;
     }
 
     const data = await response.json();
     accessToken = data.access_token;
-    console.log("Access token retrieved.");
+    console.log("Access token retrieved successfully.");
+
+    tokenRetryActive = false;
     return accessToken;
 
-  } catch (err) {
-    console.error("Exception during token refresh:", err);
+  } catch (error) {
+    console.error("Token fetch exception:", error);
+    scheduleTokenRetry();
     return null;
   }
+}
+
+function scheduleTokenRetry() {
+  if (tokenRetryActive) return;
+
+  tokenRetryActive = true;
+  console.log("Scheduling retry in 5 minutes...");
+
+  setTimeout(async () => {
+    console.log("Retrying token fetch...");
+    await refreshAccessToken();
+  }, 5 * 60 * 1000);
 }
 
 async function checkIfLive() {
