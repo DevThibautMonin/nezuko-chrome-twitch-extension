@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Nezuko Twitch Stream Extension",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This extension notifies you when Nezuko's Twitch stream goes live.",
   "permissions": [
     "notifications",
