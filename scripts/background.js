@@ -75,9 +75,9 @@ async function checkIfLive() {
   const isLive = data.data && data.data.length > 0
 
   if (isLive) {
-    console.log(`${streamer} est en live !`)
+    console.log(`[${new Date().toLocaleString()}] ${streamer} est en live !`);
     currentLiveStatus = isLive;
-    chrome.notifications.create({
+    chrome.notifications.create("nezuko-live", {
       type: 'basic',
       iconUrl: chrome.runtime.getURL("assets/extension_image1024x1024.png"),
       title: `${streamer} est en live !`,
@@ -85,7 +85,7 @@ async function checkIfLive() {
       priority: 2
     })
   } else {
-    console.log(`${streamer} est hors-ligne.`)
+    console.log(`[${new Date().toLocaleString()}] ${streamer} est hors-ligne !`);
     currentLiveStatus = false;
   }
 }
@@ -99,13 +99,22 @@ async function init() {
   await refreshAccessToken()
   if (accessToken) {
     checkIfLive()
-    setInterval(checkIfLive, 180000)
+    chrome.alarms.create("checkStreamStatus", {
+      periodInMinutes: 3
+    });
   } else {
     console.error("Impossible de démarrer la surveillance : aucun token valide obtenu.")
   }
 }
 
 init()
+
+chrome.notifications.onClicked.addListener((notificationId) => {
+  if (notificationId === "nezuko-live") {
+    chrome.tabs.create({ url: `https://www.twitch.tv/${streamer}` });
+    chrome.notifications.clear(notificationId);
+  }
+});
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "checkStreamStatus") {
