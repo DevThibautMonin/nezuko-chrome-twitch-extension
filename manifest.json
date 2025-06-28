@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Nezuko Twitch Stream Extension",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This extension notifies you when Nezuko's Twitch stream goes live.",
   "permissions": [
     "notifications",
@@ -9,7 +9,7 @@
   ],
   "host_permissions": [
     "*://api.twitch.tv/*",
-    "https://nezuko-chrome-twitch-extension-back.vercel.app/*"
+    "https://chrome-twitch-extension-back.vercel.app/*"
   ],
   "icons": {
     "16": "assets/extension_image16x16.png",
